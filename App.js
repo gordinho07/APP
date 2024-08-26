@@ -1,11 +1,14 @@
 // App.js
+import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './HomeScreen';
 import SettingsScreen from './SettingsScreen';
+import Login from './login';
+import Cadastro from './cadastro'; // Import Cadastro screen
 import Footer from './Footer';
-import React from 'react';
+import CustomButton from './CustomBotton';
 
 const Drawer = createDrawerNavigator();
 
@@ -15,17 +18,22 @@ const App = () => {
       <SafeAreaView style={styles.container}>
         <View style={styles.content}>
           <Drawer.Navigator
-            screenOptions={{
+            screenOptions={({ navigation }) => ({
               headerStyle: { backgroundColor: '#6200ee' },
               headerTintColor: '#fff',
               drawerStyle: { backgroundColor: '#f4f4f4' },
-            }}
+              headerRight: () => (
+                <CustomButton 
+                  onPress={() => navigation.navigate('Login')}
+                />
+              ),
+            })}
           >
             <Drawer.Screen name="Inicio" component={HomeScreen} />
             <Drawer.Screen name="Settings" component={SettingsScreen} />
+            <Drawer.Screen name="Login" component={Login} />
+            <Drawer.Screen name="Cadastro" component={Cadastro} /> 
           </Drawer.Navigator>
-
-
         </View>
         <Footer />
       </SafeAreaView>
@@ -36,21 +44,10 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff', // Adicione uma cor de fundo ao container para melhorar a visibilidade
+    backgroundColor: '#fff',
   },
   content: {
     flex: 1,
-  },
-  contentContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  logo: {
-    width: 100,
-    height: 50,
-    resizeMode: 'contain',
   },
 });
 

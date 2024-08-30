@@ -1,6 +1,6 @@
 // App.js
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './HomeScreen';
@@ -16,6 +16,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="dark-content" backgroundColor="#f2f2f2" />
         <View style={styles.content}>
           <Drawer.Navigator
             screenOptions={({ navigation }) => ({
@@ -44,10 +45,10 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff', // Updated background color
   },
   content: {
-    flex: 1,
+    flex: 1, // Fills the available space
   },
 });
 

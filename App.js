@@ -3,12 +3,14 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, View, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import HomeScreen from './HomeScreen';
+import Inicio from './Inicio';
 import SettingsScreen from './SettingsScreen';
 import Login from './login';
 import Cadastro from './cadastro'; // Import Cadastro screen
 import Footer from './Footer';
 import CustomButton from './CustomBotton';
+import Relato from './relato'; // Corrigir o nome se necessário
+import ContactForm from './Contato';
 
 const Drawer = createDrawerNavigator();
 
@@ -30,10 +32,12 @@ const App = () => {
               ),
             })}
           >
-            <Drawer.Screen name="Inicio" component={HomeScreen} />
+            <Drawer.Screen name="Inicio" component={Inicio} />
             <Drawer.Screen name="Settings" component={SettingsScreen} />
             <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Cadastro" component={Cadastro} /> 
+            <Drawer.Screen name="Relato" component={Relato} />
+            <Drawer.Screen name="Entre em Contato" component={ContactForm} />
           </Drawer.Navigator>
         </View>
         <Footer />

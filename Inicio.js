@@ -2,7 +2,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions } from 'react-native';
 
-// Card component
 const Card = ({ title, image, description }) => {
   const windowWidth = Dimensions.get('window').width; // Get window width
 
@@ -17,8 +16,9 @@ const Card = ({ title, image, description }) => {
   );
 };
 
+
 // HomeScreen component
-const HomeScreen = () => {
+const Inicio = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Bem-vindo ao App</Text>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f2f2f2', // Updated background color
+    backgroundColor: '#f2f2f2',
     alignItems: 'center',
   },
   header: {
@@ -84,17 +84,18 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
     margin: 10,
-    alignItems: 'center', // Center content horizontally
+    alignItems: 'center',
   },
   cardImage: {
-    width: '60%', // Adjusted width
+    width: '100%', // Adjusted to cover full width of card
     height: 150,
     borderRadius: 10,
     marginBottom: 10,
+    resizeMode: 'cover', // Ensure image covers the area without distortion
   },
   textContainer: {
     padding: 12,
-    alignItems: 'center', // Center text horizontally
+    alignItems: 'center',
   },
   cardTitle: {
     fontSize: 16,
@@ -135,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Inicio;

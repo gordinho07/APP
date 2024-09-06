@@ -1,8 +1,7 @@
 import React, { useState } from 'react'; // Certifique-se de que useState está importado
 import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity } from 'react-native';
-import Footer from './Footer'; // Certifique-se de que o caminho está correto
-import CustomButton from './CustomBotton'; // Certifique-se de que o caminho está correto
-
+import Footer from './components/Rodape'
+import BotaoNavbar from './components/BotaoNavbar';
 const { width: viewportWidth } = Dimensions.get('window');
 
 const { width, height } = Dimensions.get('window'); // Obtém a largura e altura da tela

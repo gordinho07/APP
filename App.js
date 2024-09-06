@@ -7,10 +7,11 @@ import Inicio from './Inicio';
 import SettingsScreen from './SettingsScreen';
 import Login from './login';
 import Cadastro from './cadastro'; // Import Cadastro screen
-import Footer from './Footer';
-import CustomButton from './CustomBotton';
+import Footer from './components/Rodape'
+import BotaoNavbar from './components/BotaoNavbar';
 import Relato from './relato'; // Corrigir o nome se necessário
 import ContactForm from './Contato';
+import TelaNoticias from './Noticias';
 
 const Drawer = createDrawerNavigator();
 
@@ -26,7 +27,7 @@ const App = () => {
               headerTintColor: '#fff',
               drawerStyle: { backgroundColor: '#f4f4f4' },
               headerRight: () => (
-                <CustomButton 
+                <BotaoNavbar 
                   onPress={() => navigation.navigate('Login')}
                 />
               ),
@@ -38,6 +39,7 @@ const App = () => {
             <Drawer.Screen name="Cadastro" component={Cadastro} /> 
             <Drawer.Screen name="Relato" component={Relato} />
             <Drawer.Screen name="Entre em Contato" component={ContactForm} />
+            <Drawer.Screen name="Noticias" component={TelaNoticias} />
           </Drawer.Navigator>
         </View>
         <Footer />

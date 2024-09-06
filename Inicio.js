@@ -1,7 +1,6 @@
 // HomeScreen.js
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions } from 'react-native';
-
 const Card = ({ title, image, description }) => {
   const windowWidth = Dimensions.get('window').width; // Get window width
 
@@ -16,58 +15,47 @@ const Card = ({ title, image, description }) => {
   );
 };
 
-
-// HomeScreen component
 const Inicio = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Bem-vindo ao App</Text>
-      <View style={styles.cardWrapper}>
-        <Card
-          title="MISSÃO"
-          image="https://www.unirio.br/cch/museologia/iconMissao.png/image_preview"
-          description="O projeto 'Anjos da guarda' visa combater a exploração sexual infantil e oferecer apoio às vítimas."
-        />
-        <Card
-          title="VALORES"
-          image="https://cdn-icons-png.flaticon.com/512/11340/11340020.png"
-          description="Crescer e ajudar mutuamente, não medindo esforços para proporcionar momentos melhores."
-        />
-        <Card
-          title="VISÃO"
-          image="https://cdn.icon-icons.com/icons2/2575/PNG/512/vision_view_eye_icon_153887.png"
-          description="Nós acreditamos em um mundo livre do abuso sexual infantil, onde todas as crianças possam crescer com segurança."
-        />
-      </View>
-      <View style={styles.separator} />
       <Text style={styles.aboutTitle}>Sobre</Text>
       <Text style={styles.aboutText}>
         Somos um grupo de estudantes da ETEC de Cidade Tiradentes rumo à finalização do curso de Informática para Internet junto ao ensino médio. Ou seja, estamos nos esforçando através de estudos e pesquisas, para solucionar, ou, ao menos, evidenciar de alguma forma esse assunto de extrema relevância. Tudo isso através do suporte que a tecnologia nos traz.
-      </Text>
-      <Text style={styles.aboutText}>
-        O tema por nós escolhido, fora Exploração Sexual Infantil. Isso em meio a muito debate, opiniões e, principalmente, da vontade de querer um tema que realmente fosse viável de nós oferecermos uma assistência da melhor forma possível. Sempre com total respeito e dando apoio às vitimas e, por outro lado, fornecer um acervo extenso de informações à todos, com intenção de conscientização e prevenção desse tipo de ocorrência.
       </Text>
       <Image
         source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfUqFEqCv_jCrFZKxUURb0rgtblQ5-kHjrMLei87mAtUZNtEwTgKyhJeleQid93XhwVjs&usqp=CAU' }}
         style={styles.aboutImage}
       />
-    </ScrollView>
+      <View style={styles.separator} />
+
+      <View style={styles.cardWrapper}>
+    <Card
+      title="MISSÃO"
+      image="https://www.unirio.br/cch/museologia/iconMissao.png/image_preview"
+      description="O projeto 'Anjos da guarda' visa combater a exploração sexual infantil e oferecer apoio às vítimas."
+    />
+    <Card
+      title="VALORES"
+      image="https://cdn-icons-png.flaticon.com/512/11340/11340020.png"
+      description="Crescer e ajudar mutuamente, não medindo esforços para proporcionar momentos melhores."
+    />
+    <Card
+      title="VISÃO"
+      image="https://cdn.icon-icons.com/icons2/2575/PNG/512/vision_view_eye_icon_153887.png"
+      description="Nós acreditamos em um mundo livre do abuso sexual infantil, onde todas as crianças possam crescer com segurança."
+    />
+    <View style={styles.separator} />
+  </View>
+</ScrollView>
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
     backgroundColor: '#f2f2f2',
     alignItems: 'center',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    textAlign: 'center',
   },
   cardWrapper: {
     flexDirection: 'row',
@@ -87,11 +75,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardImage: {
-    width: '100%', // Adjusted to cover full width of card
+    width: '100%',
     height: 150,
     borderRadius: 10,
     marginBottom: 10,
-    resizeMode: 'cover', // Ensure image covers the area without distortion
+    resizeMode: 'cover',
   },
   textContainer: {
     padding: 12,

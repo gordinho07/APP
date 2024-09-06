@@ -1,8 +1,7 @@
-// components/CustomButton.js
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const CustomButton = ({ onPress }) => {
+const BotaoNavbar = ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.button}>
       <Text style={styles.buttonText}>Entrar</Text>
@@ -20,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomButton;
+export default BotaoNavbar;

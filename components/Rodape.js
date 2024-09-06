@@ -3,10 +3,10 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 
 // Substitua com o caminho correto das suas imagens
-const logo = require('./assets/logo.png'); 
-const whatsappIcon = require('./assets/whatsapp.png'); 
-const instagramIcon = require('./assets/instagram.png'); 
-const facebookIcon = require('./assets/facebook.png'); 
+const logo = require('../assets/logo.png'); 
+const whatsappIcon = require('../assets/whatsapp.png'); 
+const instagramIcon = require('../assets/instagram.png'); 
+const facebookIcon = require('../assets/facebook.png'); 
 
 const Footer = () => {
   const openWhatsApp = () => {

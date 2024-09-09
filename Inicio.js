@@ -1,6 +1,9 @@
 // HomeScreen.js
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import Banner from './banner';
+import Clock from './relogio';
+
 const Card = ({ title, image, description }) => {
   const windowWidth = Dimensions.get('window').width; // Get window width
 
@@ -18,6 +21,10 @@ const Card = ({ title, image, description }) => {
 const Inicio = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Banner/>
+      <View style={styles.separator} />
+      <Clock/>
+      <View style={styles.separator} />
       <Text style={styles.aboutTitle}>Sobre</Text>
       <Text style={styles.aboutText}>
         Somos um grupo de estudantes da ETEC de Cidade Tiradentes rumo à finalização do curso de Informática para Internet junto ao ensino médio. Ou seja, estamos nos esforçando através de estudos e pesquisas, para solucionar, ou, ao menos, evidenciar de alguma forma esse assunto de extrema relevância. Tudo isso através do suporte que a tecnologia nos traz.
@@ -26,7 +33,7 @@ const Inicio = () => {
         source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfUqFEqCv_jCrFZKxUURb0rgtblQ5-kHjrMLei87mAtUZNtEwTgKyhJeleQid93XhwVjs&usqp=CAU' }}
         style={styles.aboutImage}
       />
-      <View style={styles.separator} />
+      <View style={styles.separator } />
 
       <View style={styles.cardWrapper}>
     <Card

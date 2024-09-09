@@ -4,14 +4,13 @@ import { SafeAreaView, StyleSheet, View, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Inicio from './Inicio';
-import SettingsScreen from './SettingsScreen';
 import Login from './login';
 import Cadastro from './cadastro'; // Import Cadastro screen
 import Footer from './components/Rodape'
 import BotaoNavbar from './components/BotaoNavbar';
 import Relato from './relato'; // Corrigir o nome se necessário
 import ContactForm from './Contato';
-import TelaNoticias from './Noticias';
+import TelaNoticias from './noticia';
 
 const Drawer = createDrawerNavigator();
 
@@ -34,7 +33,6 @@ const App = () => {
             })}
           >
             <Drawer.Screen name="Inicio" component={Inicio} />
-            <Drawer.Screen name="Settings" component={SettingsScreen} />
             <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Cadastro" component={Cadastro} /> 
             <Drawer.Screen name="Relato" component={Relato} />

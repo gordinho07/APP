@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, Dimensions, Image } from 'react-native';
 
 // Import the GIF
-import clockGif from './assets/clock.gif'; // Adjust the path if needed
+import clockGif from '../assets/relogio.gif'; // Adjust the path if needed
 
 const Clock = () => {
   return (
@@ -38,9 +38,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
     width: '100%',
     backgroundColor: '#f0f0f0', // Light background color for contrast
+    paddingHorizontal: 10, // Optional: Reduce padding if needed
+    marginTop: -5, // Move Clock up; adjust value if needed
   },
   backgroundContainer: {
     position: 'relative',
@@ -48,17 +49,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backgroundBox: {
-    width: 150,
-    height: 150,
-    backgroundColor: '#000', // Black background
-    borderRadius: 100, // Rounded corners
+    width: '100%', // Match the GIF container width
+    height: '100%', // Match the GIF container height
+    backgroundColor: '#8C52FF', // Black background
+    borderRadius: 20, // Slightly rounded corners
     position: 'absolute',
     zIndex: 1, // Ensure it is behind the GIF
   },
   gifContainer: {
-    width: 220,
+    width: 160,
     height: 220,
-    borderRadius: 110,
+    borderRadius: 20, // Slightly rounded corners
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
@@ -66,21 +67,21 @@ const styles = StyleSheet.create({
     zIndex: 2, // Ensure it is above the black box
   },
   gifImage: {
-    width: '100%',
-    height: '100%',
+    width: '80%',
+    height: '80%',
   },
   textContainer: {
-    marginLeft: 30,
+    marginLeft: 10, // Reduce margin to bring the text closer to the GIF
     borderLeftWidth: 2,
     borderLeftColor: '#000', // Line color separating the GIF and text
-    paddingLeft: 20,
+    paddingLeft: 10,
     width: textWidth,
   },
   separator: {
     height: 2,
     backgroundColor: '#000',
     width: '100%',
-    marginVertical: 15,
+    marginVertical: 10,
   },
   headerText: {
     fontSize: 18,

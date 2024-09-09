@@ -1,8 +1,9 @@
-// HomeScreen.js
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import Banner from './banner';
-import Clock from './relogio';
+import Banner from './components/banner';
+import Clock from './components/relogio';
+import Noticia from './noticia';
+import MVV from './MVV';
 
 const Card = ({ title, image, description }) => {
   const windowWidth = Dimensions.get('window').width; // Get window width
@@ -21,9 +22,12 @@ const Card = ({ title, image, description }) => {
 const Inicio = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Banner/>
+      <Banner />
+      <Clock />
       <View style={styles.separator} />
-      <Clock/>
+      <Noticia />
+      <View style={styles.separator} />
+      <MVV/>
       <View style={styles.separator} />
       <Text style={styles.aboutTitle}>Sobre</Text>
       <Text style={styles.aboutText}>
@@ -33,33 +37,14 @@ const Inicio = () => {
         source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfUqFEqCv_jCrFZKxUURb0rgtblQ5-kHjrMLei87mAtUZNtEwTgKyhJeleQid93XhwVjs&usqp=CAU' }}
         style={styles.aboutImage}
       />
-      <View style={styles.separator } />
-
-      <View style={styles.cardWrapper}>
-    <Card
-      title="MISSÃO"
-      image="https://www.unirio.br/cch/museologia/iconMissao.png/image_preview"
-      description="O projeto 'Anjos da guarda' visa combater a exploração sexual infantil e oferecer apoio às vítimas."
-    />
-    <Card
-      title="VALORES"
-      image="https://cdn-icons-png.flaticon.com/512/11340/11340020.png"
-      description="Crescer e ajudar mutuamente, não medindo esforços para proporcionar momentos melhores."
-    />
-    <Card
-      title="VISÃO"
-      image="https://cdn.icon-icons.com/icons2/2575/PNG/512/vision_view_eye_icon_153887.png"
-      description="Nós acreditamos em um mundo livre do abuso sexual infantil, onde todas as crianças possam crescer com segurança."
-    />
-    <View style={styles.separator} />
-  </View>
-</ScrollView>
+      <View style={styles.separator} />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1, // Use flexGrow to ensure the ScrollView takes up the full height
     padding: 16,
     backgroundColor: '#f2f2f2',
     alignItems: 'center',

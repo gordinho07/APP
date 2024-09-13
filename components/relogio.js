@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Dimensions, Image } from 'react-native';
 
 // Import the GIF
 import clockGif from '../assets/relogio.gif'; // Adjust the path if needed
 
 const Clock = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(prevCount => {
+        if (prevCount >= 500) {
+          clearInterval(interval);
+          return 500;
+        }
+        return prevCount + 1;
+      });
+    }, 5); // Adjust speed of increment
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.backgroundContainer}>
@@ -23,7 +39,7 @@ const Clock = () => {
         </Text>
         <View style={styles.separator} />
         <Text style={styles.bodyText}>
-          500 mil casos de exploração sexual contra crianças e adolescentes por ano no Brasil
+          <Text style={styles.boldText}>{count.toLocaleString()}</Text> mil casos de exploração sexual contra crianças e adolescentes por ano no Brasil
         </Text>
       </View>
     </View>
@@ -51,7 +67,7 @@ const styles = StyleSheet.create({
   backgroundBox: {
     width: '100%', // Match the GIF container width
     height: '100%', // Match the GIF container height
-    backgroundColor: '#8C52FF', // Black background
+    backgroundColor: '#8C52FF', // Purple background
     borderRadius: 20, // Slightly rounded corners
     position: 'absolute',
     zIndex: 1, // Ensure it is behind the GIF
@@ -64,7 +80,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    zIndex: 2, // Ensure it is above the black box
+    zIndex: 2, // Ensure it is above the purple box
   },
   gifImage: {
     width: '80%',
@@ -92,6 +108,10 @@ const styles = StyleSheet.create({
   bodyText: {
     fontSize: 16,
     color: '#000', // Text color
+  },
+  boldText: {
+    fontWeight: 'bold',
+    fontSize: 24, // Increase font size as needed
   },
 });
 

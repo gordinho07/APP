@@ -43,10 +43,7 @@ const Noticia = () => {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Image
-          source={cards[currentIndex].image}
-          style={styles.image}
-        />
+        <Image source={cards[currentIndex].image} style={styles.image} />
         <View style={styles.textContainer}>
           <Text style={styles.title}>{cards[currentIndex].title}</Text>
           <Text style={styles.description}>{cards[currentIndex].description}</Text>
@@ -57,7 +54,7 @@ const Noticia = () => {
       </View>
     </View>
   );
-};
+  };
 
 const styles = StyleSheet.create({
   container: {

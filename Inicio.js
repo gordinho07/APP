@@ -13,7 +13,7 @@ const Card = ({ title, image, description }) => {
   const windowWidth = Dimensions.get('window').width; // Obtemos a largura da tela
 
   return (
-    <View style={[styles.cardContainer, { width: windowWidth * 0.8 }]}>
+    <View style={[styles.cardContainer, { width: windowWidth * 0.7 }]}>
       <Image source={{ uri: image }} style={styles.cardImage} />
       <View style={styles.textContainer}>
         <Text style={styles.cardTitle}>{title}</Text>
@@ -29,7 +29,9 @@ const Inicio = () => {
       <Banner />
       <Clock />
       <View style={styles.separator} />
-      <Noticia />
+      <View style={styles.noticiaContainer}>
+        <Noticia />
+      </View>
       <View style={styles.separator} />
       <MVV />
       <View style={styles.separator} />
@@ -96,6 +98,9 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'black',
     marginVertical: 20,
+  },
+  noticiaContainer: {
+    width: '100%',
   },
   aboutTitle: {
     fontSize: 24,

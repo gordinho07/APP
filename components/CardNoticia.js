@@ -1,24 +1,60 @@
-import React from 'react';
-import { View, ScrollView, Image, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, Image, Text, StyleSheet, Dimensions } from 'react-native';
 
-// Dados dos cartões
-const data = [
-  {
-    image: require('../assets/banner.jpeg'),
-    title: 'Card 1',
-    description: 'This is the description of card 1',
-  },
-  {
-    image: require('../assets/banner.jpeg'),
-    title: 'Card 2',
-    description: 'This is the description of card 2',
-  },
-  {
-    image: require('../assets/banner.jpeg'),
-    title: 'Card 3',
-    description: 'This is the description of card 3',
-  },
-];
+// Dados dos cartões para diferentes categorias
+const cardData = {
+  noticias: [
+    {
+      image: require('../assets/banner.jpeg'),
+      title: 'Notícia 1',
+      description: 'Descrição da notícia 1',
+    },
+    {
+      image: require('../assets/banner.jpeg'),
+      title: 'Notícia 2',
+      description: 'Descrição da notícia 2',
+    },
+    {
+      image: require('../assets/banner.jpeg'),
+      title: 'Notícia 3',
+      description: 'Descrição da notícia 3',
+    },
+  ],
+  ongs: [
+    {
+      image: require('../assets/banner.jpeg'),
+      title: 'ONG 1',
+      description: 'Descrição da ONG 1',
+    },
+    {
+      image: require('../assets/banner.jpeg'),
+      title: 'ONG 2',
+      description: 'Descrição da ONG 2',
+    },
+    {
+      image: require('../assets/banner.jpeg'),
+      title: 'ONG 3',
+      description: 'Descrição da ONG 3',
+    },
+  ],
+  psicologos: [
+    {
+      image: require('../assets/banner.jpeg'),
+      title: 'Psicólogo 1',
+      description: 'Descrição do psicólogo 1',
+    },
+    {
+      image: require('../assets/banner.jpeg'),
+      title: 'Psicólogo 2',
+      description: 'Descrição do psicólogo 2',
+    },
+    {
+      image: require('../assets/banner.jpeg'),
+      title: 'Psicólogo 3',
+      description: 'Descrição do psicólogo 3',
+    },
+  ],
+};
 
 // Componente Card
 const Card = ({ image, title, description, style }) => {
@@ -31,8 +67,68 @@ const Card = ({ image, title, description, style }) => {
   );
 };
 
+// Componente CardNoticia
+const CardNoticia = () => {
+  const [category, setCategory] = useState('noticias'); // Estado para controlar a categoria
+
+  // Lista de categorias
+  const categories = ['noticias', 'ongs', 'psicologos'];
+
+  useEffect(() => {
+    // Função para alternar a categoria
+    const changeCategory = () => {
+      setCategory((prevCategory) => {
+        const currentIndex = categories.indexOf(prevCategory);
+        const nextIndex = (currentIndex + 1) % categories.length;
+        return categories[nextIndex];
+      });
+    };
+
+    // Configura o intervalo para alternar a categoria a cada 5 segundos
+    const intervalId = setInterval(changeCategory, 5000);
+
+    // Limpa o intervalo ao desmontar o componente
+    return () => clearInterval(intervalId);
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{category === 'noticias' ? 'Notícias' : category === 'ongs' ? 'ONGs' : 'Psicólogos'}</Text>
+
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+      >
+        {cardData[category].map((item, index) => (
+          <Card
+            key={index}
+            {...item}
+            style={styles.cardMargin}
+          />
+        ))}
+      </ScrollView>
+    </View>
+  );
+};
+
 // Estilos
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#f2f2f2',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginVertical: 16,
+  },
+  scrollContainer: {
+    paddingHorizontal: 16,
+    alignItems: 'center',
+  },
   card: {
     flexDirection: 'column',
     alignItems: 'center',
@@ -61,31 +157,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
   },
+  cardMargin: {
+    marginHorizontal: 8,
+  },
 });
-
-// Componente App
-const CardNoticia = () => {
-  return (
-    <ScrollView
-      horizontal={true}
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{
-        paddingHorizontal: 16,
-        justifyContent: 'center',
-        flex: 1,
-      }}
-    >
-      {data.map((item, index) => (
-        <Card
-          key={index}
-          {...item}
-          style={{
-            marginHorizontal: 8,
-          }}
-        />
-      ))}
-    </ScrollView>
-  );
-};
 
 export default CardNoticia;

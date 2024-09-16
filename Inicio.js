@@ -2,11 +2,15 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import Banner from './components/banner';
 import Clock from './components/relogio';
+import CardNoticia from './components/CardNoticia';
 import Noticia from './noticia';
 import MVV from './MVV';
 
+// Importa a imagem local
+import aboutImage from './assets/grupo.jpeg';
+
 const Card = ({ title, image, description }) => {
-  const windowWidth = Dimensions.get('window').width; // Get window width
+  const windowWidth = Dimensions.get('window').width; // Obtemos a largura da tela
 
   return (
     <View style={[styles.cardContainer, { width: windowWidth * 0.8 }]}>
@@ -27,32 +31,30 @@ const Inicio = () => {
       <View style={styles.separator} />
       <Noticia />
       <View style={styles.separator} />
-      <MVV/>
+      <MVV />
+      <View style={styles.separator} />
+      <CardNoticia />
       <View style={styles.separator} />
       <Text style={styles.aboutTitle}>Sobre</Text>
       <Text style={styles.aboutText}>
         Somos um grupo de estudantes da ETEC de Cidade Tiradentes rumo à finalização do curso de Informática para Internet junto ao ensino médio. Ou seja, estamos nos esforçando através de estudos e pesquisas, para solucionar, ou, ao menos, evidenciar de alguma forma esse assunto de extrema relevância. Tudo isso através do suporte que a tecnologia nos traz.
       </Text>
-      <Image
-        source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfUqFEqCv_jCrFZKxUURb0rgtblQ5-kHjrMLei87mAtUZNtEwTgKyhJeleQid93XhwVjs&usqp=CAU' }}
-        style={styles.aboutImage}
-      />
-      <View style={styles.separator} />
+      <View style={styles.imageContainer}>
+        <Image
+          source={aboutImage} // Usa a imagem importada
+          style={styles.aboutImage}
+        />
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1, // Use flexGrow to ensure the ScrollView takes up the full height
+    flexGrow: 1,
     padding: 16,
     backgroundColor: '#f2f2f2',
     alignItems: 'center',
-  },
-  cardWrapper: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
   },
   cardContainer: {
     backgroundColor: '#8C52FF',
@@ -105,14 +107,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 20,
     textAlign: 'center',
-    padding: 20,
+  },
+  imageContainer: {
+    borderRadius: 20, // Arredonda as bordas do container da imagem
+    overflow: 'hidden', // Garante que a imagem não ultrapasse os limites arredondados
+    width: '100%',
+    height: 300,
   },
   aboutImage: {
-    width: '80%',
-    height: 200,
-    marginBottom: 20,
-    resizeMode: 'contain',
-    borderRadius: 20,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });
 

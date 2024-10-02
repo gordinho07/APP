@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Image, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, ScrollView, Image, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 // Dados dos cartões para diferentes categorias
 const cardData = {
@@ -57,12 +57,15 @@ const cardData = {
 };
 
 // Componente Card
-const Card = ({ image, title, description, style }) => {
+const Card = ({ image, title, description, style, onPress }) => {
   return (
     <View style={[styles.card, style]}>
       <Image source={image} style={styles.image} />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
+        <Text style={styles.buttonText}>Saiba mais</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -105,6 +108,7 @@ const CardNoticia = () => {
             key={index}
             {...item}
             style={styles.cardMargin}
+            onPress={() => console.log(`Botão pressionado para ${item.title}`)}
           />
         ))}
       </ScrollView>
@@ -116,14 +120,16 @@ const CardNoticia = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#ffffff',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginVertical: 16,
+    color: '#8C52FF',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   scrollContainer: {
     paddingHorizontal: 16,
@@ -134,9 +140,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
     margin: 4,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     borderRadius: 10,
-    shadowColor: '#000',
+    shadowColor: '#8C52FF',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -159,6 +165,21 @@ const styles = StyleSheet.create({
   },
   cardMargin: {
     marginHorizontal: 8,
+  },
+  button: {
+    backgroundColor: '#8C52FF',
+    borderColor: 'transparent',
+    borderRadius: 10,
+    height: 30,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '500',
   },
 });
 

@@ -66,46 +66,57 @@ const ContactForm = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#F5F5F5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
   },
   title: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#333',
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#8C52FF',
     marginBottom: 20,
     textAlign: 'center',
   },
   form: {
-    backgroundColor: '#FFF',
-    padding: 20,
-    borderRadius: 10,
-    elevation: 3, // Adiciona sombra para efeito de elevação
-    marginBottom: 30,
+    width: '80%',
+    padding: 30,
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+    shadowColor: '#8C52FF',
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 5,
   },
   label: {
     fontSize: 16,
-    color: '#555',
-    marginBottom: 10,
+    color: '#8C52FF',
+    fontWeight: '600',
+    marginBottom: 5,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#CCC',
-    padding: 15,
-    marginBottom: 20,
+    borderColor: '#8C52FF',
+    borderWidth: 1.5,
     borderRadius: 10,
-    backgroundColor: '#FAFAFA',
-    textAlignVertical: 'top', // Alinha o texto no topo
-    minHeight: 100, // Define a altura mínima para mais conforto ao digitar
+    height: 150,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10,
+    marginBottom: 20,
+    fontSize: 16,
+    color: '#8C52FF',
   },
   button: {
-    backgroundColor: '#007BFF',
-    paddingVertical: 15,
+    marginTop: 20,
+    backgroundColor: '#8C52FF',
+    borderColor: 'transparent',
     borderRadius: 10,
+    height: 50,
+    width: '100%',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
-    color: '#FFF',
+    color: 'white',
     fontSize: 16,
     fontWeight: '500',
   },
@@ -116,7 +127,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontWeight: '600',
-    color: '#333',
+    color: '#8C52FF',
     marginBottom: 15,
     textAlign: 'center',
   },
@@ -132,7 +143,7 @@ const styles = StyleSheet.create({
   },
   contactInfo: {
     fontSize: 16,
-    color: '#333',
+    color: '#8C52FF',
   },
   teddy: {
     width: 150,
@@ -142,4 +153,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContactForm;
+export default ContactForm; 

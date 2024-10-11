@@ -1,65 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Image, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
 // Dados dos cartões para diferentes categorias
-const cardData = {
-  noticias: [
-    {
-      image: require('../assets/banner.jpeg'),
-      title: 'Notícia 1',
-      description: 'Descrição da notícia 1',
-    },
-    {
-      image: require('../assets/banner.jpeg'),
-      title: 'Notícia 2',
-      description: 'Descrição da notícia 2',
-    },
-    {
-      image: require('../assets/banner.jpeg'),
-      title: 'Notícia 3',
-      description: 'Descrição da notícia 3',
-    },
-  ],
-  ongs: [
-    {
-      image: require('../assets/banner.jpeg'),
-      title: 'ONG 1',
-      description: 'Descrição da ONG 1',
-    },
-    {
-      image: require('../assets/banner.jpeg'),
-      title: 'ONG 2',
-      description: 'Descrição da ONG 2',
-    },
-    {
-      image: require('../assets/banner.jpeg'),
-      title: 'ONG 3',
-      description: 'Descrição da ONG 3',
-    },
-  ],
-  psicologos: [
-    {
-      image: require('../assets/banner.jpeg'),
-      title: 'Psicólogo 1',
-      description: 'Descrição do psicólogo 1',
-    },
-    {
-      image: require('../assets/banner.jpeg'),
-      title: 'Psicólogo 2',
-      description: 'Descrição do psicólogo 2',
-    },
-    {
-      image: require('../assets/banner.jpeg'),
-      title: 'Psicólogo 3',
-      description: 'Descrição do psicólogo 3',
-    },
-  ],
-};
+const noticias = [
+  {
+    image: require('../assets/banner.jpeg'),
+    title: 'Notícia 1',
+    description: 'Descrição da notícia 1',
+  },
+  {
+    image: require('../assets/banner.jpeg'),
+    title: 'Notícia 2',
+    description: 'Descrição da notícia 2',
+  },
+  {
+    image: require('../assets/banner.jpeg'),
+    title: 'Notícia 3',
+    description: 'Descrição da notícia 3',
+  },
+];
+
+const ongs = [
+  {
+    image: require('../assets/banner.jpeg'),
+    title: 'ONG 1',
+    description: 'Descrição da ONG 1',
+  },
+  {
+    image: require('../assets/banner.jpeg'),
+    title: 'ONG 2',
+    description: 'Descrição da ONG 2',
+  },
+  {
+    image: require('../assets/banner.jpeg'),
+    title: 'ONG 3',
+    description: 'Descrição da ONG 3',
+  },
+];
+
+const psicologos = [
+  {
+    image: require('../assets/banner.jpeg'),
+    title: 'Psicólogo 1',
+    description: 'Descrição do psicólogo 1',
+  },
+];
 
 // Componente Card
-const Card = ({ image, title, description, style, onPress }) => {
+const Card = ({ image, title, description, onPress }) => {
   return (
-    <View style={[styles.card, style]}>
+    <View style={styles.card}>
       <Image source={image} style={styles.image} />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
@@ -72,45 +62,57 @@ const Card = ({ image, title, description, style, onPress }) => {
 
 // Componente CardNoticia
 const CardNoticia = () => {
-  const [category, setCategory] = useState('noticias'); // Estado para controlar a categoria
-
-  // Lista de categorias
-  const categories = ['noticias', 'ongs', 'psicologos'];
+  const [currentIndex, setCurrentIndex] = useState(0); // Índice do item atual
+  const [showPsychologist, setShowPsychologist] = useState(false); // Estado para controlar exibição do psicólogo
 
   useEffect(() => {
-    // Função para alternar a categoria
-    const changeCategory = () => {
-      setCategory((prevCategory) => {
-        const currentIndex = categories.indexOf(prevCategory);
-        const nextIndex = (currentIndex + 1) % categories.length;
-        return categories[nextIndex];
-      });
-    };
+    const intervalId = setInterval(() => {
+      if (currentIndex < noticias.length) {
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+      } else {
+        setShowPsychologist(true);
+        setCurrentIndex(-1); // Prepara para exibir o psicólogo
+      }
+    }, 5000);
 
-    // Configura o intervalo para alternar a categoria a cada 5 segundos
-    const intervalId = setInterval(changeCategory, 5000);
+    return () => clearInterval(intervalId); // Limpa o intervalo ao desmontar o componente
+  }, [currentIndex]);
 
-    // Limpa o intervalo ao desmontar o componente
-    return () => clearInterval(intervalId);
-  }, []);
+  useEffect(() => {
+    if (showPsychologist) {
+      const timeoutId = setTimeout(() => {
+        setShowPsychologist(false);
+        setCurrentIndex(0); // Reinicia o índice para a primeira notícia
+      }, 5000); // Exibe o psicólogo por 5 segundos
+
+      return () => clearTimeout(timeoutId); // Limpa o timeout ao desmontar
+    }
+  }, [showPsychologist]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{category === 'noticias' ? 'Notícias' : category === 'ongs' ? 'ONGs' : 'Psicólogos'}</Text>
-
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
-      >
-        {cardData[category].map((item, index) => (
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
+        {showPsychologist ? (
           <Card
-            key={index}
-            {...item}
-            style={styles.cardMargin}
-            onPress={() => console.log(`Botão pressionado para ${item.title}`)}
+            {...psicologos[0]} // Apenas um psicólogo
+            onPress={() => console.log(`Botão pressionado para ${psicologos[0].title}`)}
           />
-        ))}
+        ) : (
+          <>
+            {currentIndex >= 0 && currentIndex < noticias.length && (
+              <>
+                <Card
+                  {...noticias[currentIndex]}
+                  onPress={() => console.log(`Botão pressionado para ${noticias[currentIndex].title}`)}
+                />
+                <Card
+                  {...ongs[currentIndex]}
+                  onPress={() => console.log(`Botão pressionado para ${ongs[currentIndex].title}`)}
+                />
+              </>
+            )}
+          </>
+        )}
       </ScrollView>
     </View>
   );
@@ -123,13 +125,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#8C52FF',
-    marginBottom: 20,
-    textAlign: 'center',
   },
   scrollContainer: {
     paddingHorizontal: 16,
@@ -162,9 +157,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 12,
     color: '#666',
-  },
-  cardMargin: {
-    marginHorizontal: 8,
   },
   button: {
     backgroundColor: '#8C52FF',

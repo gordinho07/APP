@@ -37,7 +37,6 @@ const App = () => {
             <Drawer.Screen name="Cadastro" component={Cadastro} /> 
             <Drawer.Screen name="Relato" component={Relato} />
             <Drawer.Screen name="Entre em Contato" component={ContactForm} />
-            <Drawer.Screen name="Noticias" component={TelaNoticias} />
           </Drawer.Navigator>
         </View>
         <Footer />

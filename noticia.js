@@ -25,7 +25,7 @@ const Noticia = () => {
       title: 'MP faz operação contra suspeito de gravar vídeos de pornografia infantil em clube de alto padrão de Curitiba',
       description: 'O Ministério Público e a Polícia Civil do Paraná cumpriram mandado de busca e apreensão contra um suspeito de produzir pornografia infantil em um clube tradicional e de alto padrão de Curitiba.',
       buttonTitle: 'Saiba Mais',
-      buttonAction: () => Linking.openURL('https://www.instagram.com/example3'),
+      buttonAction: () => Linking.openURL('https://www.cnnbrasil.com.br/nacional/mp-faz-operacao-contra-suspeito-de-gravar-videos-de-pornografia-infantil-em-club/'),
     },
   ];
 

@@ -15,7 +15,7 @@ const CardNoticia = () => {
       id: '2',
       image: require('../assets/ong1.png'),  // Usando uma URL externa
       title: 'Aldeias Infantis SOS',
-      description: 'Descrição da Notícia 2',
+      description: 'Organização Global.',
       link: 'https://doe.aldeiasinfantis.org.br/torne-se-um-amigo-sos/people/new?utm_source=site&utm_medium=menu&utm_campaign=doacao', // Link para página da ONG
     },
     {
@@ -27,10 +27,10 @@ const CardNoticia = () => {
     },
     {
       id: '4',
-      image: { uri: 'https://via.placeholder.com/150' },
-      title: 'Notícia 4',
-      description: 'Descrição da Notícia 4',
-      link: 'https://www.exemplo.com/noticia4',
+      image: require('../assets/ong2.png'),
+      title: 'Childhood Brasil',
+      description: 'É uma associação privada sem fins lucrativos.',
+      link: 'https://www.childhood.org.br/saiba-como-agir/doe/',
     },
     {
       id: '5',
@@ -41,10 +41,10 @@ const CardNoticia = () => {
     },
     {
       id: '6',
-      image: { uri: 'https://via.placeholder.com/150' },
-      title: 'Notícia 6',
-      description: 'Descrição da Notícia 6',
-      link: 'https://www.exemplo.com/noticia6',
+      image: require('../assets/ong3.png'),
+      title: 'Henry Borel',
+      description: 'Organização brasileira sem fins econômicos.',
+      link: 'https://henryborel.com.br/quero-doar/',
     },
     {
       id: '7',

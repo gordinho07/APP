@@ -28,9 +28,6 @@ const Footer = () => {
     <View style={styles.footerContainer}>
       <View style={styles.contentContainer}>
         <Image source={logo} style={styles.logo} />
-        <Text style={styles.address}>
-          Endereço: Rua Exemplo, 123, Cidade - Estado
-        </Text>
         <View style={styles.iconsContainer}>
           <TouchableOpacity style={styles.icon} onPress={openWhatsApp}>
             <Image source={whatsappIcon} style={styles.iconImage} />

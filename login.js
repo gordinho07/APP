@@ -1,118 +1,205 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import {
+  StyleSheet, Text, TextInput, View,
+  TouchableOpacity, Alert, Image,
+  ActivityIndicator, ScrollView
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Certifique-se de instalar esta biblioteca
 
-const Form = () => {
-  const navigation = useNavigation(); // Hook to access navigation
+const App = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = () => {
+    if (!email.includes('@') || password.length < 6) {
+      setErrorMessage('Email ou senha inválidos.');
+      return;
+    }
+
+    setLoading(true);
+    setErrorMessage('');
+
+    setTimeout(() => {
+      setLoading(false);
+      Alert.alert('Sucesso', `Login realizado com: ${email}`);
+      setEmail('');
+      setPassword('');
+      setRememberMe(false);
+    }, 2000);
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image source={require('./assets/logo.png')} style={styles.logo} />
-        <Text style={styles.title}>Login</Text>
-      </View>
-      <View style={styles.form}>
-        <Text style={styles.label}>E-mail</Text>
-        <View style={styles.inputForm}>
-          <MaterialIcons name="email" size={24} color="#333" />
-          <TextInput style={styles.input} placeholder="Digite seu e-mail" />
-        </View>
-        <Text style={styles.label}>Senha</Text>
-        <View style={styles.inputForm}>
-          <MaterialIcons name="lock" size={24} color="#333" />
-          <TextInput style={styles.input} placeholder="Digite sua senha" secureTextEntry />
-        </View>
-        <TouchableOpacity style={styles.buttonSubmit}>
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: '500' }}>Entrar</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image
+        source={{ uri: 'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcS-_ycPMliqwjkLSNXt6aMeqPUvYxmz2NJ_PwgLJXxNuuEkQN8H5VApnN0r_vX3KMwMpebw3_EA5sNJHAo' }}
+        style={styles.logo}
+      />
+      <Text style={styles.title}>Bem-vindo de Volta!</Text>
+      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        placeholderTextColor="#A9A9A9"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        onFocus={() => setErrorMessage('')}
+      />
+
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          placeholderTextColor="#A9A9A9"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!showPassword}
+        />
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.iconContainer}>
+          <Icon
+            name={showPassword ? "eye-slash" : "eye"}
+            size={20}
+            color="#007BFF"
+          />
         </TouchableOpacity>
-        <Text style={styles.p}>Esqueceu a senha?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
-          <Text style={styles.span}>Não tem uma conta? Inscrever-se</Text>
-        </TouchableOpacity>
       </View>
-    </View>
+
+      <View style={styles.rememberMeContainer}>
+        <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
+          <View style={[styles.checkbox, rememberMe && styles.checked]}>
+            {rememberMe && <Text style={styles.checkboxTick}>✔</Text>}
+          </View>
+        </TouchableOpacity>
+        <Text style={styles.rememberMeText}>Lembrar-me</Text>
+      </View>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleLogin}
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Entrar</Text>
+        )}
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => Alert.alert('Redirecionar para registro')}>
+        <Text style={styles.registerText}>Não tem uma conta? Registre-se</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 20,
+    padding: 20,
+    backgroundColor: '#F7F9FC',
   },
   logo: {
-    width: 150,
-    height: 150,
-    resizeMode: 'contain',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#8C52FF',
-  },
-  form: {
-    width: '80%',
-    padding: 30,
-    backgroundColor: '#ffffff',
-    borderRadius: 20,
-    shadowColor: '#8C52FF',
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 5,
-  },
-  inputForm: {
-    borderColor: '#8C52FF',
-    borderWidth: 1.5,
-    borderRadius: 10,
-    height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: 10,
+    width: 120,
+    height: 120,
+    alignSelf: 'center',
     marginBottom: 20,
   },
-  input: {
-    marginLeft: 10,
-    borderRadius: 10,
-    borderColor: 'transparent',
-    width: '100%',
-    height: '100%',
-    fontSize: 16,
-    color: '#8C52FF',
+  title: {
+    fontSize: 28,
+    marginBottom: 24,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#333',
   },
-  buttonSubmit: {
-    marginTop: 20,
-    backgroundColor: '#8C52FF',
-    borderColor: 'transparent',
-    borderRadius: 10,
+  error: {
+    color: '#FF6B6B',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  input: {
     height: 50,
-    width: '100%',
+    borderColor: '#007BFF',
+    borderWidth: 2,
+    borderRadius: 25,
+    marginBottom: 12,
+    paddingHorizontal: 16,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  passwordContainer: {
+    position: 'relative',
+  },
+  iconContainer: {
+    position: 'absolute',
+    right: 15,
+    top: 15,
+  },
+  rememberMeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderColor: '#007BFF',
+    borderWidth: 2,
+    borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 8,
   },
-  label: {
-    color: '#8C52FF',
-    fontWeight: '600',
+  checked: {
+    backgroundColor: '#007BFF',
+  },
+  checkboxTick: {
+    color: '#fff',
     fontSize: 16,
-    marginBottom: 5,
   },
-  span: {
-    fontSize: 14,
-    marginLeft: 5,
-    color: '#8C52FF',
-    fontWeight: '500',
+  rememberMeText: {
+    fontSize: 16,
+    color: '#333',
   },
-  p: {
+  button: {
+    backgroundColor: '#007BFF',
+    borderRadius: 25,
+    padding: 15,
+    alignItems: 'center',
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  registerText: {
+    color: '#007BFF',
     textAlign: 'center',
-    color: '#666',
-    fontSize: 14,
-    margin: 5,
+    marginTop: 12,
+    fontWeight: '600',
   },
 });
 
-export default Form;
+export default App;

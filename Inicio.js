@@ -62,7 +62,7 @@ const Inicio = () => {
 
       {/* Botão de seta para rolar até o topo */}
       <TouchableOpacity style={styles.scrollToTopButton} onPress={scrollToTop}>
-        <Icon name="arrow-up" size={30} color="#fff" /> {/* Ícone de seta para cima */}
+        <Image source={require('./assets/asa.png')} style={styles.scrollToTopImage} />
       </TouchableOpacity>
     </View>
   );
@@ -156,6 +156,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 5,
+  },
+  scrollToTopButton: {
+    backgroundColor: '#8C52FF',
+    width: 60, // Define um tamanho circular para o botão
+    height: 60,
+    borderRadius: 30, // Deixa o botão totalmente arredondado
+    position: 'absolute',
+    bottom: 20,  // Posiciona o botão no canto inferior
+    right: 20,   // Posiciona o botão no lado direito da tela
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: '1px solid white'
+  },
+  scrollToTopImage: {
+    width: 60,   // Aumenta o tamanho da imagem dentro do botão
+    height: 60,
+    borderRadius: 30, // Arredonda a imagem para combinar com o botão
   },
 });
 

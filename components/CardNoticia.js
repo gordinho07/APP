@@ -29,15 +29,15 @@ const CardNoticia = () => {
       id: '4',
       image: require('../assets/ong2.png'),
       title: 'Childhood Brasil',
-      description: 'É uma associação privada sem fins lucrativos.',
+      description: 'Associação privada sem fins lucrativos.',
       link: 'https://www.childhood.org.br/saiba-como-agir/doe/',
     },
     {
       id: '5',
-      image: { uri: 'https://via.placeholder.com/150' },
-      title: 'Notícia 5',
-      description: 'Descrição da Notícia 5',
-      link: 'mailto:felipeff3179@outlook.com', // Link para abrir o e-mail diretamente
+      image: require('../assets/psico3.jpeg'),
+      title: 'Andressa Carvalho',
+      description: 'Psicóloga Clínica',
+      link: 'mailto:psicologa.andressac@gmail.com', // Link para abrir o e-mail diretamente
     },
     {
       id: '6',
@@ -48,9 +48,9 @@ const CardNoticia = () => {
     },
     {
       id: '7',
-      image: { uri: 'https://via.placeholder.com/150' },
-      title: 'Notícia 7',
-      description: 'Descrição da Notícia 7',
+      image: require('../assets/site.png'),
+      title: 'Anjos da Guarda',
+      description: 'Pagina Web da ADG',
       link: 'https://www.exemplo.com/noticia7',
     },
   ];
@@ -147,13 +147,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor: '#2ecc71', // Cor do botão
+    backgroundColor: '#f5f5f5', // Cor do botão
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
+    opacity: '75%'
   },
   buttonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 16,
   },
 });

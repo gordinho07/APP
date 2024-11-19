@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Certifique-se de instalar esta biblioteca
 
-const App = () => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -35,7 +35,7 @@ const App = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image
-        source={{ uri: 'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcS-_ycPMliqwjkLSNXt6aMeqPUvYxmz2NJ_PwgLJXxNuuEkQN8H5VApnN0r_vX3KMwMpebw3_EA5sNJHAo' }}
+        source={require('./assets/logo.png')}
         style={styles.logo}
       />
       <Text style={styles.title}>Bem-vindo de Volta!</Text>
@@ -91,7 +91,8 @@ const App = () => {
         )}
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => Alert.alert('Redirecionar para registro')}>
+      {/* Navegar para a página de cadastro */}
+      <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
         <Text style={styles.registerText}>Não tem uma conta? Registre-se</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -112,11 +113,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 28,
-    marginBottom: 24,
+    fontSize: 30,
+    marginBottom: 20,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: '#333',
+    color: '#8C52FF',
   },
   error: {
     color: '#FF6B6B',
@@ -125,20 +126,13 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    borderColor: '#007BFF',
+    borderColor: '#8C52FF',
     borderWidth: 2,
     borderRadius: 25,
     marginBottom: 12,
     paddingHorizontal: 16,
     backgroundColor: '#fff',
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
   },
   passwordContainer: {
     position: 'relative',
@@ -156,7 +150,7 @@ const styles = StyleSheet.create({
   checkbox: {
     width: 20,
     height: 20,
-    borderColor: '#007BFF',
+    borderColor: '#8C52FF',
     borderWidth: 2,
     borderRadius: 4,
     justifyContent: 'center',
@@ -164,7 +158,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   checked: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#8C52FF',
   },
   checkboxTick: {
     color: '#fff',
@@ -175,7 +169,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#8C52FF',
     borderRadius: 25,
     padding: 15,
     alignItems: 'center',
@@ -195,11 +189,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   registerText: {
-    color: '#007BFF',
+    color: '#8C52FF',
     textAlign: 'center',
     marginTop: 12,
     fontWeight: '600',
   },
 });
 
-export default App;
+export default Login;

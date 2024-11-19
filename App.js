@@ -10,7 +10,6 @@ import Footer from './components/Rodape'
 import BotaoNavbar from './components/BotaoNavbar';
 import Relato from './relato'; // Corrigir o nome se necessário
 import ContactForm from './Contato';
-import TelaNoticias from './noticia';
 
 const Drawer = createDrawerNavigator();
 

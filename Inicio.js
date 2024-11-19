@@ -1,7 +1,5 @@
 import React, { useRef } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableOpacity, Linking } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Ícone da seta para cima
-
 // Componentes importados
 import Banner from './components/banner';
 import Clock from './components/relogio';

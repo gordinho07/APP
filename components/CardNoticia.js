@@ -65,7 +65,7 @@ const CardNoticia = () => {
       } else {
         setCurrentIndex(0); // Volta para o início ao chegar ao final
       }
-    }, 3000); // Atualiza a cada 3 segundos
+    }, 4000); // Atualiza a cada 3 segundos
 
     return () => clearInterval(intervalId); // Limpa o intervalo ao desmontar o componente
   }, [currentIndex]);
@@ -84,7 +84,7 @@ const CardNoticia = () => {
         style={styles.button} 
         onPress={() => handlePress(item.link)} // Passa o link do card
       >
-        <Text style={styles.buttonText}>Saiba Mais</Text>
+        <Text style={styles.buttonText}>Entre em contato</Text>
       </TouchableOpacity>
     </View>
   );
@@ -149,13 +149,13 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#f5f5f5', // Cor do botão
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     borderRadius: 5,
     opacity: '75%'
   },
   buttonText: {
     color: '#000',
-    fontSize: 16,
+    fontSize: 14,
   },
 });
 

@@ -1,46 +1,72 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet, Text, TextInput, View,
-  TouchableOpacity, Alert, Image,
-  ActivityIndicator, ScrollView
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Certifique-se de instalar esta biblioteca
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, ActivityIndicator, ScrollView, Image } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [senha, setSenha] = useState('');
+  const [showSenha, setShowSenha] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    if (!email.includes('@') || password.length < 6) {
+  const handleLogin = async () => {
+    if (!email.includes('@') || senha.length < 6) {
       setErrorMessage('Email ou senha inválidos.');
       return;
     }
 
     setLoading(true);
     setErrorMessage('');
+    setSuccessMessage('');
 
-    setTimeout(() => {
+    try {
+      const response = await fetch('http://localhost/DESKTOP/Controller/usuario.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, senha }), 
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        if (data.status === '200') {
+          setSuccessMessage('Login realizado com sucesso!');
+          setEmail('');
+          setSenha('');
+          setRememberMe(false);
+          navigation.navigate('Inicio'); 
+        } else if (data.status === '210') {
+          setSuccessMessage('Login como administrador!');
+          navigation.navigate('Admin');
+        } else {
+          setErrorMessage('Email ou senha incorretos.');
+        }
+      } else {
+        setErrorMessage(data.message || 'Erro ao realizar o login');
+      }
+    } catch (error) {
+      setErrorMessage('Erro na conexão. Tente novamente.');
+    } finally {
       setLoading(false);
-      Alert.alert('Sucesso', `Login realizado com: ${email}`);
-      setEmail('');
-      setPassword('');
-      setRememberMe(false);
-    }, 2000);
+    }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image
-        source={require('./assets/logo.png')}
+        source={require('./assets/logo.png')} 
         style={styles.logo}
       />
       <Text style={styles.title}>Bem-vindo de Volta!</Text>
+
+      {successMessage ? <Text style={styles.success}>{successMessage}</Text> : null}
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
+      {/* Campo de email */}
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -52,24 +78,25 @@ const Login = ({ navigation }) => {
         onFocus={() => setErrorMessage('')}
       />
 
-      <View style={styles.passwordContainer}>
+      <View style={styles.senhaContainer}>
         <TextInput
           style={styles.input}
           placeholder="Senha"
           placeholderTextColor="#A9A9A9"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={!showPassword}
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry={!showSenha}
         />
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => setShowSenha(!showSenha)} style={styles.iconContainer}>
           <Icon
-            name={showPassword ? "eye-slash" : "eye"}
+            name={showSenha ? "eye-slash" : "eye"}
             size={20}
             color="#007BFF"
           />
         </TouchableOpacity>
       </View>
 
+      {/* Lembrar-me */}
       <View style={styles.rememberMeContainer}>
         <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
           <View style={[styles.checkbox, rememberMe && styles.checked]}>
@@ -79,6 +106,7 @@ const Login = ({ navigation }) => {
         <Text style={styles.rememberMeText}>Lembrar-me</Text>
       </View>
 
+      {/* Botão de login */}
       <TouchableOpacity
         style={styles.button}
         onPress={handleLogin}
@@ -91,7 +119,7 @@ const Login = ({ navigation }) => {
         )}
       </TouchableOpacity>
 
-      {/* Navegar para a página de cadastro */}
+      {/* Link para a página de cadastro */}
       <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
         <Text style={styles.registerText}>Não tem uma conta? Registre-se</Text>
       </TouchableOpacity>
@@ -119,6 +147,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#8C52FF',
   },
+  success: {
+    color: '#28a745',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
   error: {
     color: '#FF6B6B',
     marginBottom: 12,
@@ -134,7 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     shadowColor: '#000',
   },
-  passwordContainer: {
+  senhaContainer: {
     position: 'relative',
   },
   iconContainer: {
@@ -191,8 +224,7 @@ const styles = StyleSheet.create({
   registerText: {
     color: '#8C52FF',
     textAlign: 'center',
-    marginTop: 12,
-    fontWeight: '600',
+    fontSize: 16,
   },
 });
 

@@ -8,19 +8,20 @@ import { useNavigation } from '@react-navigation/native';
 
 const Register = () => {
   const navigation = useNavigation();
-  const [name, setName] = useState('');
+  const [nome_user, setnome_user] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [senha, setsenha] = useState('');
+  const [foto_user, setfoto_user] = useState('');
+  const [confirmsenha, setConfirmsenha] = useState('');
+  const [showsenha, setShowsenha] = useState(false);
+  const [showConfirmsenha, setShowConfirmsenha] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [showMoreTerms, setShowMoreTerms] = useState(false);
 
   const handleRegister = async () => {
-    if (!name.trim()) {
+    if (!nome_user.trim()) {
       setErrorMessage('Por favor, insira seu nome.');
       return;
     }
@@ -28,49 +29,64 @@ const Register = () => {
       setErrorMessage('Por favor, insira um email válido.');
       return;
     }
-    if (password.length < 6) {
+    if (senha.length < 6) {
       setErrorMessage('A senha precisa ter pelo menos 6 caracteres.');
       return;
     }
-    if (password !== confirmPassword) {
+    if (senha !== confirmsenha) {
       setErrorMessage('As senhas não coincidem.');
       return;
     }
-
+  
     setLoading(true);
     setErrorMessage('');
-
+  
     try {
-      const response = await fetch('http://etec-199-luizotavio.atwebpages.com/desktop/Controller/cliente.php', {
+      const response = await fetch('http://localhost/DESKTOP/Controller/usuario.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name,
-          email,
-          password,
+          nome_user: nome_user,
+          email: email,
+          senha: senha,
+          foto_user: foto_user || "",  
         }),
       });
-
-      const data = await response.json();
-
-      if (data.success) {
-        Alert.alert('Sucesso', `Cadastro realizado para: ${name} (${email})`);
-        setName('');
+  
+      const text = await response.text();
+      console.log('Resposta da API:', text);
+  
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (error) {
+        console.error('Erro ao parsear JSON:', error);
+        setErrorMessage('Erro ao processar a resposta do servidor.');
+        return;
+      }
+  
+      if (data.status === "200") {
+        Alert.alert('Sucesso', `Cadastro realizado para: ${nome_user} (${email})`);
+        setnome_user('');
         setEmail('');
-        setPassword('');
-        setConfirmPassword('');
+        setsenha('');
+        setConfirmsenha('');
         setAcceptTerms(false);
       } else {
-        setErrorMessage('Erro ao realizar o cadastro. Tente novamente.');
+        setErrorMessage(data.msg || 'Erro ao realizar o cadastro. Tente novamente.');
       }
     } catch (error) {
+      console.error('Erro ao cadastrar usuário:', error);
       setErrorMessage('Erro ao conectar com o servidor.');
     } finally {
       setLoading(false);
     }
   };
+    
+    
+  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -85,8 +101,8 @@ const Register = () => {
         style={styles.input}
         placeholder="Nome"
         placeholderTextColor="#A9A9A9"
-        value={name}
-        onChangeText={setName}
+        value={nome_user}
+        onChangeText={setnome_user}
         autoCapitalize="words"
         onFocus={() => setErrorMessage('')}
       />
@@ -102,39 +118,49 @@ const Register = () => {
         onFocus={() => setErrorMessage('')}
       />
 
-      <View style={styles.passwordContainer}>
+      <View style={styles.senhaContainer}>
         <TextInput
           style={styles.input}
           placeholder="Senha"
           placeholderTextColor="#A9A9A9"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={!showPassword}
+          value={senha}
+          onChangeText={setsenha}
+          secureTextEntry={!showsenha}
         />
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => setShowsenha(!showsenha)} style={styles.iconContainer}>
           <Image
-            source={showPassword ? require('./assets/verSenha.png') : require('./assets/ocultarSenha.png')}
+            source={showsenha ? require('./assets/verSenha.png') : require('./assets/ocultarSenha.png')}
             style={styles.eyeIcon}
           />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.passwordContainer}>
+      <View style={styles.senhaContainer}>
         <TextInput
           style={styles.input}
           placeholder="Confirmar Senha"
           placeholderTextColor="#A9A9A9"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry={!showConfirmPassword}
+          value={confirmsenha}
+          onChangeText={setConfirmsenha}
+          secureTextEntry={!showConfirmsenha}
         />
-        <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)} style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => setShowConfirmsenha(!showConfirmsenha)} style={styles.iconContainer}>
           <Image
-            source={showConfirmPassword ? require('./assets/verSenha.png') : require('./assets/ocultarSenha.png')}
+            source={showConfirmsenha ? require('./assets/verSenha.png') : require('./assets/ocultarSenha.png')}
             style={styles.eyeIcon}
           />
         </TouchableOpacity>
       </View>
+      <TextInput
+        style={styles.input}
+        placeholder="Foto"
+        placeholderTextColor="#A9A9A9"
+        value={foto_user}
+        onChangeText={setfoto_user}
+        keyboardType="words"
+        autoCapitalize="none"
+        onFocus={() => setErrorMessage('')}
+      />
 
       <View style={styles.termsContainer}>
         <TouchableOpacity onPress={() => setAcceptTerms(!acceptTerms)}>
@@ -231,7 +257,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: '#fff',
   },
-  passwordContainer: {
+  senhaContainer: {
     position: 'relative',
   },
   iconContainer: {
@@ -271,10 +297,10 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#8C52FF',
-    paddingVertical: 15,
+    paddingVertical: 12,
     borderRadius: 25,
+    marginBottom: 20,
     alignItems: 'center',
-    marginTop: 20,
   },
   buttonText: {
     color: '#fff',
@@ -282,11 +308,39 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   registerText: {
+    textAlign: 'center',
+    color: '#8C52FF',
+  },
+  termsDetailsContainer: {
+    marginTop: 20,
+  },
+  termsDetails: {
+    fontSize: 14,
+    color: '#333',
+    lineHeight: 20,
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+  moreTermsText: {
     color: '#8C52FF',
     textAlign: 'center',
-    marginTop: 15,
-    fontSize: 16,
+    marginTop: 8,
+  },
+  moreDetailsContainer: {
+    marginTop: 12,
+  },
+  moreDetails: {
+    fontSize: 12,
+    color: '#333',
+    lineHeight: 18,
+  },
+  termsLink: {
+    color: '#8C52FF',
+    textAlign: 'center',
+    marginTop: 12,
   },
 });
 
 export default Register;
+""

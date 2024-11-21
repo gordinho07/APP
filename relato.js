@@ -1,19 +1,43 @@
-import React, { useState } from 'react'; // Certifique-se de que useState está importado
-import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity } from 'react-native';
-import Footer from './components/Rodape'
-import BotaoNavbar from './components/BotaoNavbar';
-const { width: viewportWidth } = Dimensions.get('window');
+import React, { useState } from 'react'; 
+import { StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity, Alert } from 'react-native';
 
-const { width, height } = Dimensions.get('window'); // Obtém a largura e altura da tela
-
-// Define as dimensões do contêiner em proporção à tela
-const containerSize = 300; // Tamanho fixo de 300x300 pixels para o campo branco
-const fontSize = 30; // Tamanho fixo da fonte para o título
-const fontRelato = 16; // Tamanho fixo da fonte para o conte sua historia
+const { width, height } = Dimensions.get('window');
+const containerSize = 300;
+const fontSize = 30;
+const fontRelato = 16;
 
 const Relato = () => {
-  const [isEditing, setIsEditing] = useState(false); // Estado para controlar o modo de edição
-  const [text, setText] = useState(''); // Estado para armazenar o texto
+  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState('');
+
+  const handleSendRelato = async () => {
+    if (!text.trim()) {
+      Alert.alert('Erro', 'Por favor, preencha o relato antes de enviar.');
+      return;
+    }
+
+    try {
+      // Envia a requisição POST com os dados necessários
+      const response = await fetch('http://localhost/DESKTOP/Controller/relato.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ relato: text, id_user: 1 }), // Removido o campo data_postagem, será tratado no backend
+      });
+
+      if (response.ok) {
+        Alert.alert('Sucesso', 'Relato enviado com sucesso!');
+        setText(''); // Limpa o campo após o envio
+        setIsEditing(false);
+      } else {
+        const error = await response.json();
+        Alert.alert('Erro', `Falha ao enviar: ${error.message}`);
+      }
+    } catch (error) {
+      Alert.alert('Erro', `Erro ao conectar ao servidor: ${error.message}`);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -37,26 +61,19 @@ const Relato = () => {
             />
           )}
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleSendRelato}>
           <Text style={styles.buttonText}>Enviar</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  navbar: {
-    width: '100%',
-    padding: 10,
-    backgroundColor: '#6200ee', // Cor do navbar
-    alignItems: 'flex-start',
     justifyContent: 'center',
   },
   title: {
@@ -72,9 +89,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   background: {
-    width: containerSize, // Largura do contêiner ajustada
-    height: containerSize, // Altura do contêiner ajustada
-    backgroundColor: '#8C52FF', // Cor roxa
+    width: containerSize,
+    height: containerSize,
+    backgroundColor: '#8C52FF',
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -94,8 +111,8 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingLeft: 20,
     lineHeight: 30,
-    fontSize: fontRelato, // Tamanho da fonte ajustado
-    textAlignVertical: 'top', // Adicionado para melhor alinhamento do texto
+    fontSize: fontRelato,
+    textAlignVertical: 'top',
   },
   input: {
     backgroundColor: '#fff', 
@@ -105,18 +122,18 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingLeft: 20,
     lineHeight: 30,
-    fontSize: fontRelato, // Tamanho da fonte ajustado
-    textAlignVertical: 'top', // Adicionado para melhor alinhamento do texto
+    fontSize: fontRelato,
+    textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: '#4caf50', // Cor do botão
+    backgroundColor: '#4caf50',
     borderRadius: 10,
     padding: 10,
     marginTop: 20,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff', // Texto do botão branco
+    color: '#fff',
     fontSize: 16,
   },
 });

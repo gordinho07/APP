@@ -27,7 +27,11 @@ const Login = ({ navigation }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, senha }), 
+        body: JSON.stringify({
+          tipo: 'login', // Campo adicionado para identificar a ação
+          email,
+          senha,
+        }),
       });
 
       const data = await response.json();
@@ -58,7 +62,7 @@ const Login = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image
-        source={require('./assets/logo.png')} 
+        source={require('./assets/logo.png')} // Substitua pelo caminho correto da sua imagem
         style={styles.logo}
       />
       <Text style={styles.title}>Bem-vindo de Volta!</Text>
@@ -165,7 +169,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 16,
     backgroundColor: '#fff',
-    shadowColor: '#000',
   },
   senhaContainer: {
     position: 'relative',

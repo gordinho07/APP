@@ -11,7 +11,6 @@ const Register = () => {
   const [nome_user, setnome_user] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setsenha] = useState('');
-  const [foto_user, setfoto_user] = useState('');
   const [confirmsenha, setConfirmsenha] = useState('');
   const [showsenha, setShowsenha] = useState(false);
   const [showConfirmsenha, setShowConfirmsenha] = useState(false);
@@ -50,8 +49,7 @@ const Register = () => {
         body: JSON.stringify({
           nome_user: nome_user,
           email: email,
-          senha: senha,
-          foto_user: foto_user || "",  
+          senha: senha, 
         }),
       });
   
@@ -74,6 +72,7 @@ const Register = () => {
         setsenha('');
         setConfirmsenha('');
         setAcceptTerms(false);
+        navigation.navigate('Inicio');
       } else {
         setErrorMessage(data.msg || 'Erro ao realizar o cadastro. Tente novamente.');
       }
@@ -151,16 +150,6 @@ const Register = () => {
           />
         </TouchableOpacity>
       </View>
-      <TextInput
-        style={styles.input}
-        placeholder="Foto"
-        placeholderTextColor="#A9A9A9"
-        value={foto_user}
-        onChangeText={setfoto_user}
-        keyboardType="words"
-        autoCapitalize="none"
-        onFocus={() => setErrorMessage('')}
-      />
 
       <View style={styles.termsContainer}>
         <TouchableOpacity onPress={() => setAcceptTerms(!acceptTerms)}>
@@ -343,4 +332,3 @@ const styles = StyleSheet.create({
 });
 
 export default Register;
-""

@@ -23,7 +23,7 @@ const Relato = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ relato: text, id_user: 1 }), // Removido o campo data_postagem, será tratado no backend
+        body: JSON.stringify({ relato: text}), // Removido o campo data_postagem, será tratado no backend
       });
 
       if (response.ok) {
@@ -126,14 +126,14 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: '#4caf50',
+    backgroundColor: '#fff',
     borderRadius: 10,
     padding: 10,
     marginTop: 20,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#8C52FF',
     fontSize: 16,
   },
 });

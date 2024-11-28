@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, ActivityIndicator, ScrollView, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useUser } from './UserContext'; // Importa o contexto
 
 const Login = ({ navigation }) => {
+  const [nome_user, setNome] = useState('')
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [showSenha, setShowSenha] = useState(false);
@@ -11,16 +13,19 @@ const Login = ({ navigation }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const { setUser, user } = useUser(); // Obtém a função para atualizar o contexto e o estado do usuário
+
   const handleLogin = async () => {
+    // Validação simples do email e senha
     if (!email.includes('@') || senha.length < 6) {
       setErrorMessage('Email ou senha inválidos.');
       return;
     }
-
+  
     setLoading(true);
     setErrorMessage('');
     setSuccessMessage('');
-
+  
     try {
       const response = await fetch('http://localhost/DESKTOP/Controller/usuario.php', {
         method: 'POST',
@@ -28,24 +33,29 @@ const Login = ({ navigation }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          tipo: 'login', // Campo adicionado para identificar a ação
+          acao: 'login',
           email,
           senha,
         }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         if (data.status === '200') {
           setSuccessMessage('Login realizado com sucesso!');
           setEmail('');
           setSenha('');
           setRememberMe(false);
-          navigation.navigate('Inicio'); 
-        } else if (data.status === '210') {
-          setSuccessMessage('Login como administrador!');
-          navigation.navigate('Admin');
+  
+          // Aqui você verifica se o campo 'nome_user' existe, se não, atribui o email ou um valor padrão
+          const nome = data.nome_user || email; // Se o nome não for encontrado, usa o email como fallback
+  
+          // Atualiza o contexto do usuário com os dados retornados
+          setUser({ nome, email });
+  
+          // Navega para a tela inicial
+          navigation.navigate('Inicio');
         } else {
           setErrorMessage('Email ou senha incorretos.');
         }
@@ -58,6 +68,7 @@ const Login = ({ navigation }) => {
       setLoading(false);
     }
   };
+  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -70,7 +81,6 @@ const Login = ({ navigation }) => {
       {successMessage ? <Text style={styles.success}>{successMessage}</Text> : null}
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
-      {/* Campo de email */}
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -93,14 +103,13 @@ const Login = ({ navigation }) => {
         />
         <TouchableOpacity onPress={() => setShowSenha(!showSenha)} style={styles.iconContainer}>
           <Icon
-            name={showSenha ? "eye-slash" : "eye"}
+            name={showSenha ? 'eye-slash' : 'eye'}
             size={20}
             color="#007BFF"
           />
         </TouchableOpacity>
       </View>
 
-      {/* Lembrar-me */}
       <View style={styles.rememberMeContainer}>
         <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
           <View style={[styles.checkbox, rememberMe && styles.checked]}>
@@ -110,7 +119,6 @@ const Login = ({ navigation }) => {
         <Text style={styles.rememberMeText}>Lembrar-me</Text>
       </View>
 
-      {/* Botão de login */}
       <TouchableOpacity
         style={styles.button}
         onPress={handleLogin}
@@ -119,11 +127,12 @@ const Login = ({ navigation }) => {
         {loading ? (
           <ActivityIndicator color="#fff" />
         ) : (
-          <Text style={styles.buttonText}>Entrar</Text>
+          <Text style={styles.buttonText}>
+            {user ? `Olá, ${user.nome}` : 'Entrar'}  {/* Exibe o nome após o login */}
+          </Text>
         )}
       </TouchableOpacity>
 
-      {/* Link para a página de cadastro */}
       <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
         <Text style={styles.registerText}>Não tem uma conta? Registre-se</Text>
       </TouchableOpacity>
